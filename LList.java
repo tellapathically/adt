@@ -9,7 +9,7 @@
 public class LList<T> implements ListInterface<T>
 {
 	private Node firstNode;            // Reference to first node of chain
-
+   private Node dummyNode;            // Node with no data, always in the list making it never empty
 	private int  numberOfEntries;
    	
 	public LList()
@@ -22,6 +22,9 @@ public class LList<T> implements ListInterface<T>
       initializeDataFields();
    } // end clear
    
+   /**
+    * @param newEntry The data for the new entry to be added
+    */
    public void add(T newEntry)          // OutOfMemoryError possible
    {
       Node newNode = new Node(newEntry);
@@ -36,7 +39,10 @@ public class LList<T> implements ListInterface<T>
       
       numberOfEntries++;
    } // end add
-
+   /** 
+    * @param givenPosition The position to add the new entry at
+    * @param newEntry The data for the new entry to be added
+   */
    public void add(int givenPosition, T newEntry) // OutOfMemoryError possible
    {
       if ((givenPosition >= 1) && (givenPosition <= numberOfEntries + 1))
@@ -60,6 +66,9 @@ public class LList<T> implements ListInterface<T>
          throw new IndexOutOfBoundsException("Illegal position given to add operation.");
    } // end add
 
+   /**
+    * @param givenPosition The position of the entry to be removed
+    */
    public T remove(int givenPosition)
    {
       T result = null;                           // Return value
@@ -86,6 +95,10 @@ public class LList<T> implements ListInterface<T>
          throw new IndexOutOfBoundsException("Illegal position given to remove operation.");
    } // end remove
 
+   /** 
+    * @param givenPosition The position of the entry to replace the data of
+    * @param newEntry The new data to be replaced into the entry
+   */
    public T replace(int givenPosition, T newEntry)
    {
       if ((givenPosition >= 1) && (givenPosition <= numberOfEntries))
@@ -100,6 +113,9 @@ public class LList<T> implements ListInterface<T>
          throw new IndexOutOfBoundsException("Illegal position given to replace operation.");
    } // end replace
 
+   /**
+    * @param givenPosition The position of the entry to return the data of
+    */
    public T getEntry(int givenPosition)
    {
       if ((givenPosition >= 1) && (givenPosition <= numberOfEntries))
@@ -128,7 +144,10 @@ public class LList<T> implements ListInterface<T>
       
       return result;
    } // end toArray
-                                             
+
+   /** 
+    * @param anEntry The data of the entry to search for in the list
+    */           
    public boolean contains(T anEntry)
    {
       boolean found = false;
@@ -171,13 +190,17 @@ public class LList<T> implements ListInterface<T>
    // Initializes the class's data fields to indicate an empty list.
    private void initializeDataFields()
    {
-      firstNode = null;
+      dummyNode = new Node();
+      firstNode = dummyNode;
       numberOfEntries = 0;
    } // end initializeDataFields
    
    // Returns a reference to the node at a given position.
    // Precondition: The chain is not empty;
    //               1 <= givenPosition <= numberOfEntries.
+   /**
+    * @param givenPosition The position of the node to be
+    */
    private Node getNodeAt(int givenPosition)
    {
       // Assertion: (firstNode != null) &&
@@ -230,6 +253,3 @@ public class LList<T> implements ListInterface<T>
       } // end setNextNode
    } // end Node
 } // end LList
-
-
-
